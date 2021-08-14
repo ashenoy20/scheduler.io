@@ -1,5 +1,3 @@
-import './App.css';
-
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import Login from './Login';
 
@@ -9,6 +7,8 @@ import 'firebase/auth'
 
 import {useAuthState} from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
+
+import ApiCalendar from 'react-google-calendar-api';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCkMOz_KNuv_KyyOj4uU6CGPaw6T-RFIRQ",
@@ -27,8 +27,9 @@ const firestore = firebase.firestore();
 
 function App() {
   return (
+    <>
+    <h1>hello</h1>
     <div>
-
       <Router>
         <Switch>
           <Route path="/login" component={Login}/>
@@ -36,6 +37,7 @@ function App() {
       </Router>
       
     </div>
+    </>
   );
 }
 
