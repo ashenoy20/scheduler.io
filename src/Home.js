@@ -4,7 +4,7 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import { useHistory } from 'react-router'
 import ChatMessage from './ChatMessage'
-
+import './ChatBox.css'
 
 const db = firebase.firestore()
 let teacherEmail = null
@@ -28,7 +28,7 @@ const Home = () => {
 
         if(doc.exists){
             let user  = firebase.auth().currentUser
-            teacherRef.update({
+            await teacherRef.update({
                 students: firebase.firestore.FieldValue.arrayUnion(`${user.uid}`)
             })
 
@@ -103,13 +103,13 @@ const Home = () => {
             </form>
 
             {chat ? 
-                <div>
+                <div className="chatboxout">
                     <br />
                     { msgArray.map((msg, index) => <ChatMessage text={msg.text} sender={msg.sender} key={index}/>)}
                     <br />
-                    <form onSubmit={sendMessage}>
-                        <input type="text" value={message} onChange={e => setMessage(e.target.value)}/>
-                        <button type="submit">Send</button>
+                    <form onSubmit={sendMessage} className="formStyle">
+                        <input className="inputStyle" type="text" value={message} onChange={e => setMessage(e.target.value)}/>
+                        <button type="submit" className="buttonStyle">Send</button>
                     </form>
                 </div>:<br/>
         

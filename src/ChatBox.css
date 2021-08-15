@@ -1,0 +1,23 @@
+.chatboxout {
+    font-family: open sans;
+    font-size: 12px;
+    line-height: 17px;
+    box-sizing: border-box;
+    margin-top: 50px;
+    margin-left: 200px;
+    margin-right: 200px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+    -webkit-box-shadow: 4px 4px 20px -1px rgba(59, 59, 59, 0.6);
+    -moz-box-shadow: 4px 4px 20px -1px rgba(59, 59, 59, 0.6);
+    box-shadow: 4px 4px 20px -1px rgba(59, 59, 59, 0.6);
+    border-radius: 10px;
+  }
+
+
+  .formStyle{
+    display: flexbox;
+    justify-content: center;
+    align-items: center;
+  }

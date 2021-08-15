@@ -1,13 +1,18 @@
 import firebase from "firebase/app";
 import 'firebase/auth'
+import 'firebase/firestore'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCkMOz_KNuv_KyyOj4uU6CGPaw6T-RFIRQ",
-    authDomain: "schedulerio-2ab14.firebaseapp.com",
-    projectId: "schedulerio-2ab14",
-    storageBucket: "schedulerio-2ab14.appspot.com",
-    messagingSenderId: "143273039615",
-    appId: "1:143273039615:web:41c0ccfaee2dd86fb91eca"
-};
+    apiKey: "AIzaSyCEXcuVN2aa-hfzs5KkdVfo27Oi3BdhYgM",
+    authDomain: "schedulario.firebaseapp.com",
+    projectId: "schedulario",
+    storageBucket: "schedulario.appspot.com",
+    messagingSenderId: "373313680738",
+    appId: "1:373313680738:web:820924ba6ed959ea5f683b"
+  };
+
+
 
 export const fb = firebase.initializeApp(firebaseConfig).auth()
+
+//firebase.firestore().enablePersistence()

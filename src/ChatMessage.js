@@ -1,25 +1,26 @@
 import React from 'react'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import './ChatMessage.css'
 
 const ChatMessage = ({text, sender}) => {
     const user = firebase.auth().currentUser.displayName
 
     return (
-        <div>
+        <>
             {sender === user ?
-            <div>
-                <h3>{text}</h3>
-                <p>{sender}</p>
+            <div className="message-blue">
+                <p className="message-content">{text}</p>
+                <p className="message-timestamp-left">{sender}</p>
             </div>:
-            <div>
-                <h6>{text}</h6>
-                <p>{sender}</p>
+            <div className="message-orange">
+                <p className="message-content">{text}</p>
+                <p className="message-timestamp-right">{sender}</p>
             </div>
         
         
             }
-        </div>
+        </>
     )
 }
 
