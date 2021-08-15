@@ -63,11 +63,12 @@ const Home = () => {
        
     }
 
-    const userUID = firebase.auth().currentUser.uid
-    let teacherRef = db.collection('teachers')
+    
     
 
     useEffect(() => {
+        const userUID = firebase.auth().currentUser.uid
+        let teacherRef = db.collection('teachers')
          teacherRef.where("students", "array-contains", `${userUID}`).get()
         .then((result) => {
             if(!result.empty){
