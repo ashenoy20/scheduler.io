@@ -1,16 +1,14 @@
-import React, {useContext, useState, useEffect} from 'react'
-import { AuthContext } from './AuthContextProvider'
+import React, {useState, useEffect} from 'react'
 import {fb} from './FireBase'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import { useHistory } from 'react-router'
+import ChatMessage from './ChatMessage'
 
 
 const db = firebase.firestore()
 let teacherEmail = null
 const Home = () => {
-
-    
 
     const [email, setEmail] = useState("")
     const [chat, setChat] = useState(false)
@@ -34,8 +32,11 @@ const Home = () => {
                 students: firebase.firestore.FieldValue.arrayUnion(`${user.uid}`)
             })
 
-            window.location.reload()
+            setChat(true)
+        
         }
+
+        window.location.reload()
     }
 
     const sendMessage = async (e) => {
@@ -50,14 +51,16 @@ const Home = () => {
                 text: message,
                 sender: user.displayName
             }
-            teacherRef.update({
+            await teacherRef.update({
                 messages: firebase.firestore.FieldValue.arrayUnion(data)
             })
+            teacherRef.get()
+                .then((info) => {
+                    setArray(info.data().messages)
+                })
 
         }
-
-        window.location.reload()
-
+       
     }
 
     const userUID = firebase.auth().currentUser.uid
@@ -80,7 +83,7 @@ const Home = () => {
             }
         })
 
-    }, [url])
+    }, [url, msgArray])
 
 
 
@@ -101,8 +104,7 @@ const Home = () => {
             {chat ? 
                 <div>
                     <br />
-                    {console.log(msgArray)}
-                    { msgArray.map(msg => <h5>{msg.text}</h5>)}
+                    { msgArray.map((msg, index) => <ChatMessage text={msg.text} sender={msg.sender} key={index}/>)}
                     <br />
                     <form onSubmit={sendMessage}>
                         <input type="text" value={message} onChange={e => setMessage(e.target.value)}/>
