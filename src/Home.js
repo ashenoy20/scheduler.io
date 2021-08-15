@@ -90,15 +90,13 @@ const Home = () => {
 
     return (
         <>
-            <div>
-                <button onClick={signOutUser}>Sign Out</button>
+            <div className="signOut">
+                <button className="button-two" onClick={signOutUser}><span>Sign Out</span></button>
             </div>
 
-            <br />
 
-            <form onSubmit={addTeacher}>
-                <label htmlFor="teacherEmail">Teacher Email</label>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value) }/>
+            <form onSubmit={addTeacher} className="search-wrapper cf">
+                <input placeholder="Add Teacher Email" type="email" value={email} onChange={e => setEmail(e.target.value) }/>
                 <button type="submit">Add</button>
             </form>
 
@@ -107,8 +105,8 @@ const Home = () => {
                     <br />
                     { msgArray.map((msg, index) => <ChatMessage text={msg.text} sender={msg.sender} key={index}/>)}
                     <br />
-                    <form onSubmit={sendMessage} className="formStyle">
-                        <input className="inputStyle" type="text" value={message} onChange={e => setMessage(e.target.value)}/>
+                    <form onSubmit={sendMessage} className="search-wrapper cf">
+                        <input placeholder="Enter a message" className="inputStyle" type="text" value={message} onChange={e => setMessage(e.target.value)}/>
                         <button type="submit" className="buttonStyle">Send</button>
                     </form>
                 </div>:<br/>
