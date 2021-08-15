@@ -7,7 +7,7 @@ import { useHistory } from 'react-router'
 
 
 const db = firebase.firestore()
-
+let teacherEmail = null
 const Home = () => {
 
     
@@ -15,6 +15,7 @@ const Home = () => {
     const [email, setEmail] = useState("")
     const [chat, setChat] = useState(false)
     const [message, setMessage] = useState("")
+    const [msgArray, setArray] = useState([])
 
     const url = useHistory()
     const signOutUser = async () => {
@@ -37,8 +38,25 @@ const Home = () => {
         }
     }
 
-    const sendMessage = (e) => {
+    const sendMessage = async (e) => {
         e.preventDefault()
+        const teacherRef = db.collection('teachers').doc(`${teacherEmail}`)
+        const doc = await teacherRef.get()
+
+        if(doc.exists){
+            let user  = firebase.auth().currentUser
+
+            let data = {
+                text: message,
+                sender: user.displayName
+            }
+            teacherRef.update({
+                messages: firebase.firestore.FieldValue.arrayUnion(data)
+            })
+
+        }
+
+        window.location.reload()
 
     }
 
@@ -50,6 +68,12 @@ const Home = () => {
          teacherRef.where("students", "array-contains", `${userUID}`).get()
         .then((result) => {
             if(!result.empty){
+                teacherEmail = result.docs.at(0).id
+                teacherRef.doc(teacherEmail).get()
+                .then((info) => {
+                    setArray(info.data().messages)
+                })
+
                 setChat(true)
             }else{
                 setChat(false)
@@ -77,6 +101,8 @@ const Home = () => {
             {chat ? 
                 <div>
                     <br />
+                    {console.log(msgArray)}
+                    { msgArray.map(msg => <h5>{msg.text}</h5>)}
                     <br />
                     <form onSubmit={sendMessage}>
                         <input type="text" value={message} onChange={e => setMessage(e.target.value)}/>
