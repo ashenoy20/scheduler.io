@@ -1,47 +1,49 @@
 import React, {useState} from 'react'
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
 import {fb} from './FireBase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/auth'
 
-const Login = () => {
+
+const db = firebase.firestore()
+
+const Teacher = () => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    const signIn = (e) => {
+    
+
+    const signUp = async (e) => {
         e.preventDefault()
         const userEmail = email
         const userPassword = password
         
-        fb.signInWithEmailAndPassword(userEmail, userPassword)
+        const data = {
+            messages: [],
+            students: []
+        }
+        await db.collection('teachers').doc(`${userEmail}`).set(data)
+        fb.createUserWithEmailAndPassword(userEmail, userPassword)
         .catch((error) => {
             console.log(error)
         })
+        
+
     }
 
     return (
-        <>
-            
-
-            <div>
-                <button onClick={() => { fb.signInWithRedirect(new firebase.auth.GoogleAuthProvider())}}>Sign in with google as student</button>
-            </div>
-
-            <div>
-            <br />
-            <h3>Teacher Login</h3>
-            <form onSubmit={signIn}>
+        <div>
+            <form onSubmit={signUp}>
                 <label htmlFor="email">Email</label>
                 <input type="email" value={email} onChange={ e => setEmail(e.target.value) } />
                 <label htmlFor="password">Password</label>
                 <input type="password" value={password} onChange={e => setPassword(e.target.value) }/>
-                <button type="submit">Sign In</button>
+                <button type="submit">Sign up</button>
             </form>
-            <a href="/teacherSignUp">Don't have a teacher account? Sign Up!</a>
         </div>
-        </>
     )
 }
 
-export default Login
+export default Teacher

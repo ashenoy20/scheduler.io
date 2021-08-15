@@ -16,11 +16,11 @@ const AuthContextProvider = (props) => {
         fb.onAuthStateChanged(user => {
             setUser(user)
             setStatus(false)
-            if(user){
+            if(user && !user.displayName){
+                url.push('/teacherHome')
+            }else if(user && user.displayName){
                 url.push('/home')
-            }else{
-                url.push('/login')
-            }  
+            } 
         })
     }, [user, url])
 
