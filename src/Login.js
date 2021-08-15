@@ -2,7 +2,8 @@ import React, {useState} from 'react'
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import {fb} from './FireBase'
+import {fb} from './FireBase';
+import './login.css';
 
 const Login = () => {
 
@@ -13,7 +14,7 @@ const Login = () => {
         e.preventDefault()
         const userEmail = email
         const userPassword = password
-        
+
         fb.signInWithEmailAndPassword(userEmail, userPassword)
         .catch((error) => {
             console.log(error)
@@ -22,19 +23,19 @@ const Login = () => {
 
     return (
         <>
-            
 
+
+            <h3>Student Login</h3>
             <div>
-                <button onClick={() => { fb.signInWithRedirect(new firebase.auth.GoogleAuthProvider())}}>Sign in with google as student</button>
+                <button onClick={() => { fb.signInWithRedirect(new firebase.auth.GoogleAuthProvider())}} class = "button1">Google Sign In</button>
             </div>
 
             <div>
-            <br />
             <h3>Teacher Login</h3>
             <form onSubmit={signIn}>
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">Email   </label>
                 <input type="email" value={email} onChange={ e => setEmail(e.target.value) } />
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Password   </label>
                 <input type="password" value={password} onChange={e => setPassword(e.target.value) }/>
                 <button type="submit">Sign In</button>
             </form>
